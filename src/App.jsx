@@ -1,75 +1,62 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './App.css';
-import { usePlaidLink } from 'react-plaid-link';
+import React, { useEffect, useRef, useState } from "react";
+import "./App.css";
+import { usePlaidLink } from "react-plaid-link";
+import {getExpireDate } from "./components/components";
+import {useCookies} from 'react-cookie'
 
 const App = () => {
 
-
-  const generateUid = () => {
-    const uid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    return uid;
-  }
-
-  const [linkToken, setLinkToken] = useState(null)
-  const uid =useRef();
-  const [auth,setAuth]=useState(false);
-
+  const [cookies, setCookie] = useCookies(['Email']);
+  const [linkToken, setLinkToken] = useState(null);
+  const [email,setEmail] = useState(null);
+  
   const generateToken = async () => {
-    uid.current=generateUid();
-    
-    //set uid to local storage with expiration time of 1 hour
+    const item = localStorage.getItem("token");
+    if (item) {
 
-    const ext = new Date().getTime() + 1000 * 60 * 60 * 1;
-    localStorage.setItem('uid', JSON.stringify({
-      value: uid.current,
-      expires: ext,
-    }));
-    const item=localStorage.getItem('token');
+      setLinkToken(JSON.parse(item).value.link_token);
+      return;
 
-    if(item){
-        setLinkToken(JSON.parse(item).value.link_token);
-        return;
+    } else {
+        const response = await fetch("api/linkToken", {
+          method: "GET",
+        });
+       
+        const data = await response.json();
+        localStorage.setItem( "token",JSON.stringify({
+            value: data,
+            expires: getExpireDate(),
+          })
+        );
+
+      setLinkToken(data.link_token);
     }
-    
-    const response = await fetch('api/create_link_token', {
-      method: 'GET',
-    });
-    const expirationTime = new Date().getTime() + 1000 * 60 * 60 * 4;
-    const data = await response.json();
-    localStorage.setItem('token', JSON.stringify({
-      value: data,
-      expires: expirationTime,
-    }));
-
-    setLinkToken(data.link_token);
-  }
+  };
 
   useEffect(() => {
     generateToken();
-    let a =localStorage.getItem('uid');
-    uid.current=JSON.parse(a).value;
   }, []);
 
- 
-  const { open,ready } = usePlaidLink({
+  const { open, ready } = usePlaidLink({
     token: linkToken,
-    onSuccess:((public_token) => {
-      fetch("/api/set_access_token", {
+    onSuccess: (public_token) => {
+      fetch("/api/setAccessToken", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
         },
-        body: `public_token=${public_token}&uid=${uid.current}`,
+        body: `public_token=${public_token}&email=${cookies.email}`,
+      }).then((res) => {
+        console.log(res.body, "Token set successfully");
       });
-    }),
+    },
   });
 
-
   return (
-    <div className='App'>
-      <button onClick={() => open()} disabled={!ready}>
+    <div className="App">
+      {/* <button onClick={() => open()} disabled={!ready}>
         Link account
-      </button>
+      </button> */}
     </div>
   );
 };
