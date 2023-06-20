@@ -506,6 +506,7 @@ export default function LineChartComponent() {
 
   const createOptions = () => ({
     maintainAspectRatio: false,
+    responsive: true,
     interaction: {
         mode: "index",
         intersect: false,
@@ -526,7 +527,6 @@ export default function LineChartComponent() {
             ticks: {
                 color:  "#fff",
             },
-
         },
         x: {
             grid: {
@@ -550,7 +550,6 @@ export default function LineChartComponent() {
   return (
     <div className="w-full h-full flex  items-center justify-center bg-white border border-gray-200 rounded-lg shadow py-16 md:px-50 md:py-32 dark:bg-gray-800 dark:border-gray-700">
       <Chart className='h-full w-full' type="line" data={chartDataView} options={createOptions()} />
-      {/* <input className='align-bottom' type='text'/> */}
     </div>
   );
 }
