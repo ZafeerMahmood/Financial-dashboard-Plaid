@@ -1,7 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { usePlaidLink } from "react-plaid-link";
-import { getExpireDate } from "./components/components";
-import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import NavbarHome from "./components/header/navbar";
 import Table from "./components/table/table";
@@ -36,7 +33,12 @@ ChartJS.register(
 //Todo add useEffec to get the data from the server and pass it to the table, cards and charts
 
 const App = () => {
- 
+   /**
+   * The main component of the application.
+   * Renders the entire application UI, including cards, charts, and tables.
+   *
+   * @returns {JSX.Element} The JSX element representing the application UI.
+   */
   return (
     <div className="bg-gray-950 w-screen h-screen overflow-x-hidden  overflow-y-scroll lg:fixed  ">
       <NavbarHome />
