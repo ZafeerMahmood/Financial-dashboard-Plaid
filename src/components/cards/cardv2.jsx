@@ -33,7 +33,7 @@ export default function Card({ balace }) {
 
   return (
     <div className="w-full h-full p-4 bg-white border border-gray-200 rounded-lg shadow py-16 md:px-16 md:py-24 dark:bg-gray-800 dark:border-gray-700">
-      <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-200">
+      <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
         Available Balance :
       </h5>
       <div className="flex items-baseline text-gray-900 dark:text-white">

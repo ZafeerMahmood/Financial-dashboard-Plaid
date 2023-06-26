@@ -466,9 +466,6 @@ export default function LineChartComponent() {
   ]);
 
 
-
-  
-
   const positiveChartData = chartData.filter((data) => data.amount > 0);
   const negativeChartData = chartData.filter((data) => data.amount < 0);
   
@@ -487,16 +484,16 @@ export default function LineChartComponent() {
     datasets: [
         {
             label: "Expense",
-            backgroundColor: "rgba(51,200,99,.1)",
-            borderColor: "rgba(51,200,99,.7)",
+            backgroundColor: "rgba(51, 200, 99, 0.2)",
+            borderColor: "rgba(51, 200, 99, 0.9)",
             fill: true,
             data: positiveChartData.map((data) => data.amount),
             lineTension: 0.5,
         },
         {
             label: "Revenue",
-            backgroundColor: "rgba(242,153,74,.1)",
-            borderColor: "rgba(242,153,74,.7)",
+            backgroundColor: "rgba(242, 153, 74, 0.2)",
+            borderColor: "rgba(242, 153, 74, 0.9)",
             fill: true,
             data:negativeChartData.map((data) => -data.amount),
             lineTension: 0.5,

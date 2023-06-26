@@ -35,12 +35,12 @@ const mergedData = {
       label: "Amount",
       data: newData.map((item) => Math.abs(item.amount)),
       backgroundColor: [
-        "rgba(255, 99, 132, 0.4)",
-        "rgba(54, 162, 235, 0.4)",
-        "rgba(255, 206, 86, 0.4)",
-        "rgba(75, 192, 192, 0.4)",
-        "rgba(153, 102, 255, 0.4)",
-        "rgba(255, 159, 64, 0.4)",
+        "rgba(255, 99, 132, 0.7)",
+        "rgba(54, 162, 235, 0.7)",
+        "rgba(255, 206, 86, 0.7)",
+        "rgba(75, 192, 192, 0.7)",
+        "rgba(153, 102, 255, 0.7)",
+        "rgba(255, 159, 64, 0.7)",
       ],
       borderColor: [
         "rgba(255, 99, 132, 1)",
@@ -57,15 +57,20 @@ const mergedData = {
 
 export default function PieChart() {
   return (
-    <div className="w-full h-full flex items-center justify-center bg-white border border-gray-200 rounded-lg shadow py-16 md:px-0 md:py-0 dark:bg-gray-800 dark:border-gray-700">
-      <Doughnut
-        className=""
-        data={mergedData}
-        options={{
-          responsive: true,
-          maintainAspectRatio: false,
-        }}
-      />
+    <div className="w-full h-full  bg-white border border-gray-200 rounded-lg shadow py-16 md:px-0 md:py-0 dark:bg-gray-800 dark:border-gray-700">
+      <h5 className=" mt-4 ml-4 text-xl font-medium text-gray-500 dark:text-white">
+        Available Balance :
+      </h5>
+      <div className="w-full h-3/4 flex items-center justify-center bg-white  rounded-lg  py-16 md:px-0 md:py-0 dark:bg-gray-800">
+        <Doughnut
+          className=""
+          data={mergedData}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,
+          }}
+        />
+      </div>
     </div>
   );
 }
