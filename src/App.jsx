@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import NavbarHome from "./components/header/navbar";
 import Table from "./components/table/table";
 import Card from "./components/cards/cards";
+import Cardv2 from "./components/cards/cardv2";
 import PieChart from "./components/Chart/PieChart";
 import "./App.css";
 import LineChartComponent from "./components/Chart/lineChart";
@@ -43,8 +44,8 @@ const App = () => {
     <div className="bg-gray-950 w-screen h-screen overflow-x-hidden  overflow-y-scroll lg:fixed  ">
       <NavbarHome />
       <div className="grid grid-cols-1  md:grid-cols-3 gap-4 h-full w-full p-4">
-        <div className=" rounded-xl row-span-1 col-span-1 "><Card balace={642}/></div>
-        <div className=" rounded-xl  row-span-1 col-span-1" ><Card balace={0}/></div>
+        <div className=" rounded-xl row-span-1 col-span-1 "><Card balance={642}/></div>
+        <div className=" rounded-xl  row-span-1 col-span-1" ><Cardv2 balance={0}/></div>
         <div className=" rounded-xl  row-span-1 col-span-1 "><PieChart/></div>
         <div className=" row-span-2 col-span-1 md:col-span-2 rounded-xl"><LineChartComponent/></div> 
         <div className=" row-span-2 col-span-1 rounded-xl overflow-auto h-fit md:h-auto"><Table data={null}/></div>

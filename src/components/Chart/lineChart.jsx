@@ -513,8 +513,18 @@ export default function LineChartComponent() {
         tooltip: {
             enabled: true,
         },
-        legend: false,
+        legend: true,
+        position: "top",
+        title: {
+            display: true,
+            text: "Expense vs Revenue Chart",
+            font: {
+                size: 20,
+            },
+            color: "white",
+        }
     },
+
     scales: {
         y: {
             grid: {

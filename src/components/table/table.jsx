@@ -1858,8 +1858,13 @@ const sortedList = list.sort((a, b) => {
 
 
     return (
-    <div class="relative shadow-md sm:rounded-lg">
+    <div class="relative rounded-lg bg-gray-700">
+        <h5 className="mb-4 w-full text-xl p-2 pl-4 font-medium bg-gray-800 text-gray-500 dark:text-white  border-b-2 border-gray-800">
+            Transaction History :
+        </h5>
+
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" class="px-6 py-3">

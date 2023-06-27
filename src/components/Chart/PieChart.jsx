@@ -1,4 +1,5 @@
 import { Doughnut } from "react-chartjs-2";
+import React, { useEffect, useState } from "react";
 
 const newData = [
   {
@@ -32,7 +33,7 @@ const mergedData = {
   labels: newData.map((item) => item.category.join(", ")),
   datasets: [
     {
-      label: "Amount",
+      label: "Total Amount Spend on ",
       data: newData.map((item) => Math.abs(item.amount)),
       backgroundColor: [
         "rgba(255, 99, 132, 0.7)",
@@ -56,19 +57,31 @@ const mergedData = {
 };
 
 export default function PieChart() {
+
+
+  const createOptions = () => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display:   true ,
+        position:  "left" 
+      },            
+  }
+});
+  
+
   return (
-    <div className="w-full h-full  bg-white border border-gray-200 rounded-lg shadow py-16 md:px-0 md:py-0 dark:bg-gray-800 dark:border-gray-700">
-      <h5 className=" mt-4 ml-4 text-xl font-medium text-gray-500 dark:text-white">
-        Available Balance :
+    <div className="w-full h-full p-4  bg-white border border-gray-200 rounded-lg shadow py-16 md:px-0 md:py-0 dark:bg-gray-800 dark:border-gray-700">
+      <h5 className=" md:relative md:top-[21%] md:left-4 text-xl font-medium text-gray-500 dark:text-white ">
+        Expenses by Category :
       </h5>
-      <div className="w-full h-3/4 flex items-center justify-center bg-white  rounded-lg  py-16 md:px-0 md:py-0 dark:bg-gray-800">
+      <br/>
+      <div className="w-full h-3/4 mt-auto bg-white rounded-lg  dark:bg-gray-800 ">
         <Doughnut
           className=""
           data={mergedData}
-          options={{
-            responsive: true,
-            maintainAspectRatio: false,
-          }}
+          options={createOptions(window.innerWidth)}
         />
       </div>
     </div>
