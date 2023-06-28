@@ -29,6 +29,12 @@ const newData = [
   },
 ];
 
+/**
+ * Creates the merged data object for the chart component.
+ *
+ * @param {Array} newData - The array of data objects to be merged.
+ * @returns {object} The merged data object for the chart.
+ */
 const mergedData = {
   labels: newData.map((item) => item.category.join(", ")),
   datasets: [
@@ -59,14 +65,19 @@ const mergedData = {
 export default function PieChart() {
 
 
-  const createOptions = () => ({
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display:   true ,
-        position:  "left" 
-      },            
+/**
+ * Creates the options object for the chart component.
+ *
+ * @returns {object} The options object for the chart.
+ */
+const createOptions = () => ({
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: true,
+      position: "left"
+    }
   }
 });
   
