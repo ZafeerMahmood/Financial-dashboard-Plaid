@@ -466,16 +466,51 @@ export default function LineChartComponent() {
   ]);
 
 
-  const positiveChartData = chartData.filter((data) => data.amount > 0);
-  const negativeChartData = chartData.filter((data) => data.amount < 0);
+/**
+ * Filters the chart data based on positive amounts.
+ *
+ * @param {Array} chartData - The array of chart data.
+ * @returns {Array} The filtered chart data with positive amounts.
+ */
+const positiveChartData = chartData.filter((data) => data.amount > 0);
+
+/**
+ * Filters the chart data based on negative amounts.
+ *
+ * @param {Array} chartData - The array of chart data.
+ * @returns {Array} The filtered chart data with negative amounts.
+ */
+const negativeChartData = chartData.filter((data) => data.amount < 0);
+
   
-  positiveChartData.sort((a, b) => new Date(a.date) - new Date(b.date));
-  negativeChartData.sort((a, b) => new Date(a.date) - new Date(b.date));
+/**
+ * Sorts the positiveChartData array based on the date property in ascending order.
+ */
+positiveChartData.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+/**
+ * Sorts the negativeChartData array based on the date property in ascending order.
+ */
+negativeChartData.sort((a, b) => new Date(a.date) - new Date(b.date));
   
+ /**
+ * Formats a date string to a short month representation.
+ *
+ * @param {string} dateString - The date string to be formatted.
+ * @returns {string} The formatted date string with the short month representation.
+ */
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleString("default", { month: "short" });
   };
+
+ /**
+ * Configures the data view for the chart.
+ *
+ * @type {Object}
+ * @property {Array} labels - An array of labels for the chart.
+ * @property {Array} datasets - An array of datasets for the chart.
+ */
   const chartDataView = {
     labels: positiveChartData.map((data) => {
       const [year, month, day] = data.date.split("-");
@@ -501,6 +536,11 @@ export default function LineChartComponent() {
     ],
 };
 
+/**
+ * Creates the options configuration for a chart.
+ *
+ * @returns {Object} The options configuration object.
+ */
   const createOptions = () => ({
     maintainAspectRatio: false,
     responsive: true,
