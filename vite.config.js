@@ -1,7 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
+/**
+ * Vite configuration file.
+ * @see {@link https://vitejs.dev/config/} for more information.
+ * @type {import('vite').UserConfig}
+ */
 export default defineConfig({
   plugins: [react()],
   target: 'es6',

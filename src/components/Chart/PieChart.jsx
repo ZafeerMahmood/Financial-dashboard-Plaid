@@ -1,34 +1,35 @@
 import { Doughnut } from "react-chartjs-2";
 import React, { useEffect, useState } from "react";
+import Loader from "../loader/loder";
 
-const newData = [
-  {
-    amount: 2235.000000000001,
-    category: ["Food and Drink", "Restaurants"],
-    percentage: 63.29,
-  },
-  {
-    amount: 600.0,
-    category: ["Payment", "Credit Card"],
-    percentage: 16.99,
-  },
-  {
-    amount: 300.0,
-    category: ["Food and Drink", "Restaurants", "Fast Food"],
-    percentage: 8.5,
-  },
-  {
-    amount: 287.85000000000014,
-    category: ["Travel", "Taxi"],
-    percentage: 8.15,
-  },
-  {
-    amount: 108.24999999999997,
-    category: ["Food and Drink", "Restaurants", "Coffee Shop"],
-    percentage: 3.07,
-  },
-];
 
+
+/**
+ * PieChart displays a pie chart.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array} props.data - The array of data objects for the chart.
+ * @Array {Type} [ {
+        "amount": 2145.600000000001,
+        "category": [
+            "Food and Drink",
+            "Restaurants"
+        ],
+        "percentage": 62.75
+    }]
+ * @returns {JSX.Element} The PieChart JSX element.
+ */
+export default function PieChart({data}) {
+
+
+const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    if(data){
+      setTimeout(() => {
+      setLoading(false)
+      }, 2000);
+    }
+  },[data])
 /**
  * Creates the merged data object for the chart component.
  *
@@ -36,11 +37,11 @@ const newData = [
  * @returns {object} The merged data object for the chart.
  */
 const mergedData = {
-  labels: newData.map((item) => item.category.join(", ")),
+  labels: data.map((item) => item.category.join(", ")),
   datasets: [
     {
       label: "Total Amount Spend on ",
-      data: newData.map((item) => Math.abs(item.amount)),
+      data: data.map((item) => Math.abs(item.amount)),
       backgroundColor: [
         "rgba(255, 99, 132, 0.7)",
         "rgba(54, 162, 235, 0.7)",
@@ -62,9 +63,6 @@ const mergedData = {
   ],
 };
 
-export default function PieChart() {
-
-
 /**
  * Creates the options object for the chart component.
  *
@@ -83,6 +81,9 @@ const createOptions = () => ({
   
 
   return (
+    (loading)? (<div className="w-full h-full flex justify-center p-4  border rounded-lg shadow py-16 md:px-16 md:py-24 bg-gray-800 border-gray-700">
+    <Loader /> </div>) :
+    (
     <div className="w-full h-full p-4  bg-white border border-gray-200 rounded-lg shadow py-16 md:px-0 md:py-0 dark:bg-gray-800 dark:border-gray-700">
       <h5 className=" md:relative md:top-[21%] md:left-4 text-xl font-medium text-gray-500 dark:text-white ">
         Expenses by Category :
@@ -95,6 +96,6 @@ const createOptions = () => ({
           options={createOptions(window.innerWidth)}
         />
       </div>
-    </div>
+    </div>)
   );
 }

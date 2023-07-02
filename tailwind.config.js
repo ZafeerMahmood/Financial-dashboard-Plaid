@@ -1,4 +1,8 @@
-/** @type {import('tailwindcss').Config} */
+/**
+ * Tailwind CSS configuration file.
+ * @see {@link https://tailwindcss.com/docs} for more information.
+ * @type {import('tailwindcss').Config}
+ */
 export default {
   content: [
     "./index.html",
