@@ -3,11 +3,11 @@ built using React, tailwind CSS and Chart.js
 use the backend for [backend flask service](https://github.com/ZafeerMahmood/plaid_project_backend)
 
 # setup
-`1. clone the server.
+*1. clone the server.
 ```sh
 py server.py
 ```
-`2. run frontend
+*2. run frontend
 ```sh
 git clone https://github.com/ZafeerMahmood/plaid_project_frontend.git
 npm install
@@ -34,7 +34,5 @@ then opens the plaid cdn to link it with a Bank.
     }
   })
 ```
-# Screenshots.
-![sreenshot]()
 
 
