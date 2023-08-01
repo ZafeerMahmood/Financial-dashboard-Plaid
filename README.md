@@ -31,6 +31,7 @@ then opens the plaid cdn to link it with a Bank.
  const { open, ready } = usePlaidLink({
     token: linkToken,
     onSuccess: async (public_token, metadata) => {
+      // send the public token to your server and exchange it for a access token.
     }
   })
 ```
