@@ -43,6 +43,6 @@ then opens the plaid cdn to link it with a Bank.
   })
 ```
 
-## Screen Shots
+## Screen Shot
 
-![Screenshot_1](path/to/screenshot.png)
+![Screenshot_1](https://raw.githubusercontent.com/ZafeerMahmood/Financial_dashboard/main/screenshots/ss1.png)
