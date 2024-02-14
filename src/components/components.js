@@ -30,7 +30,7 @@ const getExpireDate = () => {
  * @param {string} email - The email parameter to include in the request body.
  * @param {string} method - The method to use for the request.
  * @returns {Promise<any>} - A Promise that resolves to the JSON response body if the status is 200,
- *                          otherwise resolves to the status code. Returns null if an error occurs.
+ * otherwise resolves to the status code. Returns null if an error occurs.
  */
 const fetchData = async (path, email , method) => {
   try {
@@ -53,6 +53,9 @@ const fetchData = async (path, email , method) => {
     return null;
   }
 };
+
+
+
 
 
 export { generateUid, getExpireDate , fetchData};

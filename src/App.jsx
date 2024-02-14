@@ -34,27 +34,42 @@ ChartJS.register(
 );
 
 /**
-   * The main component of the application.
-   * Renders the entire application UI, including cards, charts, and tables.
-   *
-   * @returns {JSX.Element} The JSX element representing the application UI.
+ * The main component of the application.
+ * Renders the entire application UI, including cards, charts, and tables.
+ *
+ * @returns {JSX.Element} The JSX element representing the application UI.
  */
 const App = () => {
   const email = useRef();
+  const linkToken = useRef();
   const [cookies, setCookie] = useCookies(["Email"]);
-  const [linkToken, setLinkToken] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [balance, setBalance] = useState({});
   const [plaidUpdateMode, setPlaidUpdateMode] = useState(false);
   const [expenses, setExpenses] = useState([]);
   const [pattern, setPattern] = useState([]);
 
- /**
+  const { open, ready } = usePlaidLink({
+    token: linkToken.current,
+    onSuccess: async (public_token, metadata) => {
+      //do nothing the access token remais the same
+      setPlaidUpdateMode(false);
+    },
+    onExit: async (err, metadata) => {
+      if (err != null) {
+        console.log("Plaid Link exit error: " + err);
+      }
+      console.log("Link exit metadata: " + metadata);
+    },
+  });
+
+  /**
    * Calls the API to reauthenticate with the provided email.
    * @param {string} email - The email to use for reauthentication.
    * @returns {boolean} - True if the response status is 525, false otherwise.
- */
+   */
   const checkifReauth = async () => {
+    email.current = cookies.email;
     const response = await fetch("/api/Reauthenticate", {
       method: "POST",
       headers: {
@@ -63,8 +78,12 @@ const App = () => {
       body: `email=${email.current}`,
     });
     const data = await response.json();
+    console.log(data);
+    if (data.message === "Access Token Up To Date") {
+      return false;
+    }
     if (response.status === 525) {
-      setLinkToken(data.link_token);
+      linkToken.current = data.link_token;
       setPlaidUpdateMode(true);
       return true;
     } else {
@@ -72,25 +91,9 @@ const App = () => {
     }
   };
 
-  const PlaidUpdateMode = async () => {
-    const {open,ready} = usePlaidLink({
-      token: linkToken,
-      onSuccess: (public_token, metadata) => {
-        //do nothing the access token remais the same
-        setPlaidUpdateMode(false);
-      },
-      onExit: (err, metadata) => {
-        if (err != null) {
-          console.log('Plaid Link exit error: ' + err);
-        }
-        console.log('Link exit metadata: ' + metadata);
-      },
-    });
-    if(ready){
-      open();
-    }
-    
-}
+  const PlaidUpdateModeFunction = () => {
+    open();
+  };
 
   /**
    * Retrieves user data including transactions, balance, expenses, and pattern.
@@ -101,14 +104,17 @@ const App = () => {
     const Email = email.current; // Assuming you have the email value stored in the `email.current` variable
     const method = "POST";
     // Fetch transactions
-    const transactionResult = await fetchData('transactions', Email, method)
+    const transactionResult = await fetchData("transactions", Email, method);
     if (typeof transactionResult === "number") {
-      console.log("Error fetching transactions. Status code:", transactionResult);
+      console.log(
+        "Error fetching transactions. Status code:",
+        transactionResult
+      );
     } else {
       setTransactions(transactionResult);
     }
     //Fetch balance
-    const balanceResult = await fetchData('balance', Email, method);
+    const balanceResult = await fetchData("balance", Email, method);
     if (typeof balanceResult === "number") {
       console.log("Error fetching balance. Status code:", balanceResult);
     } else {
@@ -116,14 +122,14 @@ const App = () => {
     }
 
     // Fetch expenses
-    const expenseResult = await fetchData('expense', Email, method);
+    const expenseResult = await fetchData("expense", Email, method);
     if (typeof result === "number") {
       console.log("Error fetching balance. Status code:", expenseResult);
     } else {
       setExpenses(expenseResult);
     }
     // Fetch pattern
-    const patternResult = await fetchData('pattern', Email, method);
+    const patternResult = await fetchData("pattern", Email, method);
     if (typeof patternResult === "number") {
       console.log("Error fetching balance. Status code:", patternResult);
     } else {
@@ -132,17 +138,15 @@ const App = () => {
   };
 
   useEffect(() => {
-    getUserData();
-    /* dont know if this is needed or works but if an access token expires it will reauthenticate the user 
-      still needs to be Tested  
-    if(checkifReauth()){
-      call paid link to reauthenticate the user
-      PlaidUpdateMode();
-
-    }else{
-      call api to get the data
-      getUserData();
-    }*/
+    const load = async () => {
+      const Check = await checkifReauth();
+      if (Check) {
+        PlaidUpdateModeFunction();
+      } else {
+        await getUserData();
+      }
+    };
+    load();
   }, [cookies.email]);
 
   return (

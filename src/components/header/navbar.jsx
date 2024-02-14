@@ -12,7 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
  */
 export default function NavbarHome() {
   const [openNav, setOpenNav] = useState(false);
-  const [moobileNav, setMobileNav] = useState(false);
+  const [mobileNav, setMobileNav] = useState(false);
   const [cookies, setCookie] = useCookies(["Email"]);
   const [linkToken, setLinkToken] = useState(null);
 
@@ -62,7 +62,7 @@ export default function NavbarHome() {
     if (response.status === 200) {
       toast.success("Transactions Updated !", {});
       //reloade page to update the transactions
-      //window.location.reload();
+      window.location.reload();
     } else {
       toast.error("Error Occured !", {});
     }
@@ -99,6 +99,8 @@ export default function NavbarHome() {
     if (cookies.email) {
       email.current = cookies.email;
     } else {
+
+      // relogin somthing with cloudflare.
       setCookie("email", "zafeer746@gmail.com", {
         path: "/",
         expires: getExpireDate(),
@@ -197,7 +199,7 @@ export default function NavbarHome() {
           className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
           ripple={false}
           onClick={() => {
-            setOpenNav(!openNav), setMobileNav(!moobileNav);
+            setOpenNav(!openNav), setMobileNav(!mobileNav);
           }}
         >
           {openNav ? (
@@ -232,7 +234,7 @@ export default function NavbarHome() {
           )}
         </div>
       </div>
-      {moobileNav ? (
+      {mobileNav ? (
         <div className="flex flex-col space-y-2">
           <button
             className="bg-blue-500"

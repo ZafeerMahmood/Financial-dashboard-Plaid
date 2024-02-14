@@ -110,7 +110,7 @@ negativeChartData.sort((a, b) => new Date(a.date) - new Date(b.date));
         position: "top",
         title: {
             display: true,
-            text: "Expense vs Revenue Chart",
+            text: "working average",
             font: {
                 size: 20,
             },

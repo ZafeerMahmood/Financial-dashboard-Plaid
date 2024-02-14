@@ -17,7 +17,9 @@ export default function BalanceCard({ data }) {
       setLoading(false)
       }, 2000);
     }
+    console.log(data)
   },[data])
+
 
   return (
     (loading) ?
